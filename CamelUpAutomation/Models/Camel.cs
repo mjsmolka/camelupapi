@@ -9,9 +9,12 @@ namespace CamelUpAutomation.Models
 {
     public class Camel
     {
-        int Id { get; set; }
-        CamelColor Color { get; set; }
+        public string id { get; set; }
+        public CamelColor Color { get; set; }
         
-        bool IsCrazyCamel { get; set; }
+        public bool IsCrazyCamel { get; set; }
+
+        public int Position { get; set; }
+        public int Height { get; set; }
     }
 }

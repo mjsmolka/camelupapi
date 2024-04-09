@@ -37,7 +37,7 @@ namespace CamelUpAutomation
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             name = name ?? data?.name;
 
-            await _gameService.CreateGame();
+            // await _gameService.CreateGame();
 
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."

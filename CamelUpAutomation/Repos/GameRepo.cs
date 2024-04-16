@@ -12,7 +12,7 @@ namespace CamelUpAutomation.Repos
     public interface IGameRepo
     {
         Task AddGame(Game game);
-
+        Task<IEnumerable<Game>> GetGames(string userId, string[] gameIds, int skip, int take);
         Task<Game> GetGame(string gameId);
         Task UpdateGame(Game game);
         Task DeleteGame(string email);
@@ -28,6 +28,27 @@ namespace CamelUpAutomation.Repos
         public async Task AddGame(Game game)
         {
             await _gameContainer.CreateItemAsync(game, new PartitionKey(game.id));
+        }
+
+        public async Task<IEnumerable<Game>> GetGames(string userId, string[] gameIds, int skip, int take)
+        {
+            var gameIdDictionary = new Dictionary<string, bool>();
+            foreach (var gameId in gameIds)
+            {
+                gameIdDictionary.Add(gameId, true);
+            }
+            var iterator = _gameContainer.GetItemLinqQueryable<Game>()
+                                .Where(u => 
+                                    u.IsPrivate == false ||
+                                    u.CreatedBy == userId
+                                 )
+                                .OrderByDescending(u => u.CreatedAt)
+                                .Skip(skip)
+                                .Take(take)
+                                .ToFeedIterator();
+            var games = await iterator.ReadNextAsync();
+
+            return games;
         }
 
         public async Task<Game> GetGame(string gameId)

@@ -42,10 +42,10 @@ namespace CamelUpAutomation.Services
             return code;
         }
 
-        public Task<EmailConfirmationCode> GetEmailConfirmationCode(string code, EmailConfirmationCodeAction action)
+        public async Task<EmailConfirmationCode> GetEmailConfirmationCode(string code, EmailConfirmationCodeAction action)
         {
             string codeHash = _cryptoService.GenerateEmailConfirmationCodeHash(code, action);
-            var emailConfirmationCode = _emailConfirmationCodeRepo.GetEmailConfirmationCodeAsync(codeHash, action);
+            var emailConfirmationCode = await _emailConfirmationCodeRepo.GetEmailConfirmationCodeAsync(codeHash, action);
             if (emailConfirmationCode != null)
             {
                 return emailConfirmationCode;

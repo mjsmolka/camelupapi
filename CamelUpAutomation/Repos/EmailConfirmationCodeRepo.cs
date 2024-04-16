@@ -37,10 +37,6 @@ namespace CamelUpAutomation.Repos
             var emailConfirmationCode = await iterator.ReadNextAsync();
 
             var confirmationCode = emailConfirmationCode.FirstOrDefault();
-            if (confirmationCode != null)
-            {
-                await DeleteEmailConfirmationCodeAsync(codeHash);
-            }
             return emailConfirmationCode.FirstOrDefault();
         }
 

@@ -38,6 +38,7 @@ namespace CamelUpAutomation
             builder.Services.AddSingleton<IUserRepo, UserRepo>();
             builder.Services.AddSingleton<IEmailConfirmationCodeRepo, EmailConfirmationCodeRepo>();
             builder.Services.AddSingleton<IGameRepo, GameRepo>();
+            builder.Services.AddSingleton<IGameUserRepo, GameUserRepo>();
         }
     }
 }

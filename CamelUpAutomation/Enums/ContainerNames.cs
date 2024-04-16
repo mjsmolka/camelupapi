@@ -11,5 +11,6 @@ namespace CamelUpAutomation.Enums
         Games,
         Users,
         EmailConfirmationCodes,
+        GameUsers,
     }
 }

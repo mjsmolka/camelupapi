@@ -3,6 +3,7 @@ namespace CamelUpAutomation.Auth;
 
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
@@ -13,6 +14,7 @@ using CamelUpAutomation.Models.Users;
 using CamelUpAutomation.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -25,6 +27,7 @@ public interface IAuthService
 	Task<ServiceResult> VerifyEmailAddress(string code);
 
 	Task<ServiceResult> UpdateUserPassword(string code, string newPassword);
+	ServiceResult<string> VerifyJWTToken(string token, bool emailVerified = true);
 }
 
 public class AuthService : IAuthService
@@ -74,8 +77,8 @@ public class AuthService : IAuthService
 	public async Task<ServiceResult> Register(string email, string username, string password)
 	{
 
-		var emailExists = await _userService.GetUserByEmail(email);
-		if (emailExists != null)
+		var getUserResult = await _userService.GetUserByEmail(email);
+		if (getUserResult.IsSuccessful)
 		{
 			return ServiceResult.FailedResult("User already exists with this email", ServiceResponseCode.Forbidden);
 		}
@@ -146,7 +149,8 @@ public class AuthService : IAuthService
 		{
 			new Claim(JwtRegisteredClaimNames.Sub, user.Email),
 			new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-			new Claim("emailVerified", user.EmailConfirmed.ToString())
+			new Claim("emailVerified", user.EmailConfirmed.ToString()),
+			new Claim("userId", user.Id.ToString())
 		};
 		var token = new JwtSecurityToken(
 			issuer: _config.GetValue<string>("JWTIssuer"),
@@ -159,9 +163,41 @@ public class AuthService : IAuthService
 		return ServiceResult<string>.SuccessfulResult(tokenString);
 	}
 
+	public ServiceResult<string> VerifyJWTToken(string token, bool emailVerified = true)
+	{
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_config.GetValue<string>("JWTSecretKey"));
+		try
+		{
+			var result = tokenHandler.ValidateToken(token, new TokenValidationParameters
+			{
+				ValidIssuer = _config.GetValue<string>("JWTIssuer"),
+				ValidAudience = _config.GetValue<string>("JWTAudience"),
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("JWTSecretKey"))),
+				ValidateIssuer = true,
+				ValidateAudience = true,
+				ValidateLifetime = false,
+				ValidateIssuerSigningKey = true
+			}, out SecurityToken validatedToken);
+			var jsonToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+			// get the userId from the token claims
+			var userId = jsonToken.Claims.FirstOrDefault(claim => claim.Type == "userId").Value;
+			var isEmailVerified = jsonToken.Claims.FirstOrDefault(claim => claim.Type == "emailVerified").Value;
+			if (emailVerified && isEmailVerified == "False")
+			{
+                return ServiceResult<string>.FailedResult("Email not verified", ServiceResponseCode.Forbidden);
+            }
+			return ServiceResult<string>.SuccessfulResult(userId);
+		} catch (Exception e)
+		{
+			return ServiceResult<string>.FailedResult("Invalid Token", ServiceResponseCode.Forbidden);
+		}
+		
+	}
+
 	private async Task<ServiceResult<EmailConfirmationCode>> VerifyEmailAddressCode(string code)
 	{
-		EmailConfirmationCode emailConfirmationCode = await _emailConfirmationCodeService.GetEmailConfirmationCode(code, EmailConfirmationCodeAction.ConfirmEmail);
+		var emailConfirmationCode = await _emailConfirmationCodeService.GetEmailConfirmationCode(code, EmailConfirmationCodeAction.ConfirmEmail);
 		if (emailConfirmationCode == null)
 		{
 			return ServiceResult<EmailConfirmationCode>.FailedResult("Invalid code", ServiceResponseCode.Forbidden);
@@ -182,8 +218,7 @@ public class AuthService : IAuthService
 	private async Task<bool> SendEmailVerificationEmail(User user)
 	{
 		var code = await GetEamilVerificationCode(user);
-		code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-		string actionUrl = _config.GetSection("ActionUrls").GetValue("VerifyEmail", "localhost") + $"{code}/{user.Email}";
+		string actionUrl = _config.GetValue<string>("ActionUrl") + $"?code={code}";
 		WelcomeEmailData welcomeEmailData = new WelcomeEmailData
 		{
 			Email = user.Email,

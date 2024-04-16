@@ -17,6 +17,10 @@ namespace CamelUpAutomation.Models.Game
         public int Round { get; set; }
         public int RoundRoles { get; set; }
 
+        public string CreatedBy { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
         public Player[] Players { get; set; }
 
         public Camel[] Camels { get; set; }

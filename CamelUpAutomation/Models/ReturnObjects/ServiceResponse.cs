@@ -62,7 +62,7 @@ namespace CamelUpAutomation.Models.ReturnObjects
         {
             return new ServiceResult
             {
-                _ResponseCode = ServiceResponseCode.BadRequest,
+                _ResponseCode = code,
                 _Error = error
             };
         }

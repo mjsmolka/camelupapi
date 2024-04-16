@@ -4,25 +4,32 @@ using CamelUpAutomation.Models.Game;
 using CamelUpAutomation.Models.Players;
 using CamelUpAutomation.Models.ReturnObjects;
 using CamelUpAutomation.Repos;
+using DurableTask.Core.History;
 using Microsoft.Azure.Cosmos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CamelUpAutomation.Repos.GameUserRepo;
 
 namespace CamelUpAutomation.Services
 {
     public interface IGameService
 	{
 		Task<ServiceResult<Game>> CreateGame(string name, string userId, bool isPrivate, string code);
+		Task<ServiceResult<IEnumerable<Game>>> GetGames(string userId, int skip, int take);
+		Task<ServiceResult<Game>> UpdateGame(Game game, string userId);
+
+		Task<ServiceResult<Game>> GetGame(string gameId);
 		Task<ServiceResult> PlaceSpectatorTile(string gameId, string userId, int tilePosition, CheerTileMode mode);
 		Task<ServiceResult> CreateRollAction(string gameId, string userId);
 		Task<ServiceResult> AddRollNumber(string gameId, int rollNumber, CamelColor color);
 		Task<ServiceResult> AddLegBet(string gameId, string userId, string ticketId);
 		Task<ServiceResult> AddRaceBet(string gameId, string userId, CamelColor camelColor, bool isWinnerBet);
 		Task<ServiceResult> AddPartnership(string gameId, string userId, string partnershipPlayerId);
-		Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName);
+		Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName, string code);
+		Task<ServiceResult<Game>> RemovePlayer(string gameId, string playerUserId, string userId);
 	}
 
 	public class GameService : IGameService
@@ -31,16 +38,22 @@ namespace CamelUpAutomation.Services
 		private readonly IUserService _userService;
 		private readonly IGameRepo _gameRepo;
 		private readonly IGameLogicService _gameLogicService;
+		private readonly IGameUserRepo _gameUserRepo;
 
-		public GameService(CosmosClient client, ICryptoService cryptoService, IGameRepo gameRepo, IGameLogicService gameLogicService)
-		{
-			this._cryptoService = cryptoService;
-			this._gameRepo = gameRepo;
-			this._gameLogicService = gameLogicService;
-		}
+		public GameService(ICryptoService cryptoService, IGameRepo gameRepo, IGameLogicService gameLogicService, IGameUserRepo gameUserRepo)
+        {
+            this._cryptoService = cryptoService;
+            this._gameRepo = gameRepo;
+            this._gameLogicService = gameLogicService;
+            this._gameUserRepo = gameUserRepo;
+        }
 
-		public async Task<ServiceResult<Game>> CreateGame(string name, string userId, bool isPrivate, string code)
+         public async Task<ServiceResult<Game>> CreateGame(string name, string userId, bool isPrivate, string code)
 		{
+			if (isPrivate && string.IsNullOrEmpty(code))
+			{
+                return ServiceResult<Game>.FailedResult("Code is required for private games");
+            }
 			// create a game object 
 			Game game = new Game
 			{
@@ -49,8 +62,10 @@ namespace CamelUpAutomation.Services
 				Code = code,
 				Name = name,
 				Turn = 0,
-				Round = 1,
+				Round = 0, // setting round to 1 starts the game 
 				RoundRoles = 0,
+				CreatedAt = DateTime.Now,
+				CreatedBy = userId,
 				Players = null,
 				Camels = null,
 			};
@@ -59,6 +74,32 @@ namespace CamelUpAutomation.Services
 			await _gameRepo.AddGame(game);
 			return ServiceResult<Game>.SuccessfulResult(game);
 		}
+
+		public async Task<ServiceResult<Game>> UpdateGame(Game game, string userId)
+		{
+            Game dbGame = await _gameRepo.GetGame(game.id);
+			if (dbGame.CreatedBy != userId)
+			{
+				return ServiceResult<Game>.FailedResult("Only the creator of the game can edit it");
+			}
+			dbGame.Code = game.Code;
+			dbGame.IsPrivate = game.IsPrivate;
+			dbGame.Name = game.Name;
+			await _gameRepo.UpdateGame(dbGame);
+			return ServiceResult<Game>.SuccessfulResult(dbGame);
+        }
+
+		public async Task<ServiceResult<IEnumerable<Game>>> GetGames(string userId, int skip, int take)
+		{
+			IEnumerable<GameUser> gameUsers = await _gameUserRepo.GetGameUsersByUserId(userId);
+			string[] gameIds = gameUsers.Select(gu => gu.GameId).ToArray();
+            IEnumerable<Game> games = await _gameRepo.GetGames(userId, gameIds, skip, take);
+            if (games == null)
+			{
+                return ServiceResult<IEnumerable<Game>>.FailedResult("No games found");
+            }
+            return ServiceResult<IEnumerable<Game>>.SuccessfulResult(games);
+        }
 
 		public async Task<ServiceResult> PlaceSpectatorTile(string gameId, string userId, int tilePosition, CheerTileMode mode)
 		{
@@ -197,38 +238,72 @@ namespace CamelUpAutomation.Services
 			return ServiceResult.SuccessfulResult();
 		}
 
-		public async Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName)
+		public async Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName, string code)
 		{
 			ServiceResult<Game> gameResult = await GetGame(gameId);
 			if (!gameResult.IsSuccessful)
 			{
 				return gameResult;
 			}
+			var game = gameResult.Result;
+			if (game.IsPrivate && game.Code != code)
+			{
+                return ServiceResult<Game>.FailedResult("Invalid code", ServiceResponseCode.Forbidden);
+            }
+
 			ServiceResult<Models.Users.User> userResult = await _userService.GetUser(userId);
 			if (!userResult.IsSuccessful)
 			{
                 return ServiceResult<Game>.FailedResult("User not found");
             }
-			var game = gameResult.Result;
+
+		
 			var user = userResult.Result;
 			AddPlayerToGame(game, user, playerName);
 			await _gameRepo.UpdateGame(game);
-			return ServiceResult<Game>.SuccessfulResult(game);
-		}
-
-		public async Task<ServiceResult<Game>> GetGame(string gameId)
-		{
-			Game game = await _gameRepo.GetGame(gameId);
-			if (game == null)
+			await _gameUserRepo.AddGameUser(new GameUser
 			{
-				return ServiceResult<Game>.FailedResult("Game not found");
-			}
+                id = _cryptoService.GenerateRandomString(),
+                GameId = game.id,
+                UserId = user.id
+            });
 			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
-		
+		public async Task<ServiceResult<Game>> RemovePlayer(string gameId, string playerUserId, string userId)
+        {
+            ServiceResult<Game> gameResult = await GetGame(gameId);
+            if (!gameResult.IsSuccessful)
+            {
+                return gameResult;
+            }
+            ServiceResult<Models.Users.User> userResult = await _userService.GetUser(userId);
+            if (!userResult.IsSuccessful)
+            {
+                return ServiceResult<Game>.FailedResult("User not found", ServiceResponseCode.NotFound);
+            }
 
-		private void AddPlayerToGame(Game game, Models.Users.User User, string playerName)
+            var game = gameResult.Result;
+
+			if (game.Turn > 0)
+			{
+				return ServiceResult<Game>.FailedResult("Game has already started", ServiceResponseCode.Forbidden);
+			}
+            if (game.Players.FirstOrDefault(p => p.UserId == userId) == null)
+            {
+                return ServiceResult<Game>.FailedResult("Player not found in game", ServiceResponseCode.NotFound);
+            }
+			if (game.CreatedBy != userId && playerUserId != userId)
+			{
+				return ServiceResult<Game>.FailedResult("Only the creator of the game can remove players", ServiceResponseCode.Forbidden);
+			}
+            game.Players = game.Players.Where(p => p.UserId != userId).ToArray();
+			await _gameUserRepo.DeleteGameUser(userId);
+			await _gameRepo.UpdateGame(game);
+			return ServiceResult<Game>.SuccessfulResult(game);
+        }
+
+        private void AddPlayerToGame(Game game, Models.Users.User User, string playerName)
 		{
 			IList<Player> playerList;
 			if (game.Players == null)
@@ -266,8 +341,12 @@ namespace CamelUpAutomation.Services
 			var game = gameResult.Result;
 			if (game.Players.FirstOrDefault(p => p.UserId == userId ) == null)
 			{
-                return ServiceResult<Game>.FailedResult("Player not found in game");
+                return ServiceResult<Game>.FailedResult("Player not found in game", ServiceResponseCode.NotFound);
             }
+			if (game.Round < 1)
+			{
+				return ServiceResult<Game>.FailedResult("Game has not started yet", ServiceResponseCode.Forbidden);
+			}
 			return gameResult;
 		}
 
@@ -310,5 +389,15 @@ namespace CamelUpAutomation.Services
             }
             game.Camels = camels.ToArray();
         }
+
+		public async Task<ServiceResult<Game>> GetGame(string gameId) {
+            Game game = await _gameRepo.GetGame(gameId);
+            if (game == null)
+            {
+                return ServiceResult<Game>.FailedResult("Game not found");
+            }
+            return ServiceResult<Game>.SuccessfulResult(game);
+        }
+
 	}
 }

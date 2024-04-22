@@ -17,7 +17,7 @@ namespace CamelUpAutomation.Models.Players
 
         public string Name { get; set; }
 
-        public int? PartnerId { get; set; }
+        public string? PartnerId { get; set; }
         public int Balance { get; set; }
 
         public int PlayPosition { get; set; }

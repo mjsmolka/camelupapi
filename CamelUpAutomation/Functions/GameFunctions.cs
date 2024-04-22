@@ -12,6 +12,9 @@ using CamelUpAutomation.Auth;
 using CamelUpAutomation.DTOs.Auth;
 using CamelUpAutomation.DTOs.Game;
 using CamelUpAutomation.Services;
+using CamelUpAutomation.Enums;
+using System.Collections;
+using CamelUpAutomation.Models.Game;
 
 namespace CamelUpAutomation.Functions
 {
@@ -30,8 +33,8 @@ namespace CamelUpAutomation.Functions
 
 		[FunctionName("GetGames")]
 		public async Task<IActionResult> GetGamesAction(
-			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "game/{skip}/{take}")] HttpRequest req,
-					ILogger log, int skip, int take)
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "game/{mode}/{skip}/{take}")] HttpRequest req,
+					ILogger log, int mode, int skip, int take)
 		{
             try
 			{
@@ -41,8 +44,18 @@ namespace CamelUpAutomation.Functions
 				{
                     return tokenResult.ActionResult;
                 }
-                var result = await _gameService.GetGames(tokenResult.Result, skip, take);
-                return result.ActionResult;
+				switch ((GameChartMode)mode)
+				{
+					case GameChartMode.Public:
+                        return (await _gameService.GetPublicGames(skip, take)).ActionResult;
+					case GameChartMode.Created:
+                        return (await _gameService.GetGamesByOwner(tokenResult.Result, skip, take)).ActionResult;
+					case GameChartMode.Active:
+                        return (await _gameService.GetPlayerGames(tokenResult.Result, skip, take)).ActionResult;
+				}
+
+                
+                return ServiceResult.FailedResult("Invalid mode", ServiceResponseCode.BadRequest).ActionResult;
             } catch (Exception e)
 			{
                 log.LogError(e.Message);
@@ -72,6 +85,28 @@ namespace CamelUpAutomation.Functions
             }
         }
 
+		[FunctionName("DeleteGame")]
+		public async Task<IActionResult> DeleteGameAction(
+			[HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "game/{gameId}")] HttpRequest req,
+					ILogger log, string gameId)
+		{
+            try
+			{
+                req.Headers.TryGetValue("token", out var token);
+                ServiceResult<string> tokenResult = _authService.VerifyJWTToken(token);
+                if (!tokenResult.IsSuccessful)
+				{
+                    return tokenResult.ActionResult;
+                }
+                var result = await _gameService.DeleteGame(gameId, tokenResult.Result);
+                return result.ActionResult;
+            } catch (Exception e)
+			{
+                log.LogError(e.Message);
+                return ServiceResult.FailedResult(e.Message, ServiceResponseCode.InternalServerError).ActionResult;
+            }
+        }
+
 
 		[FunctionName("GameAction")]
 		public async Task<IActionResult> GameAction(
@@ -86,30 +121,12 @@ namespace CamelUpAutomation.Functions
 				{
                     return tokenResult.ActionResult;
                 }
-				return ServiceResult.FailedResult("Route not found", ServiceResponseCode.NotFound).ActionResult;
 				string routeSlug = req.Query["route"];
 				switch (routeSlug)
 				{
                     case "create":
                         return await CreateGame(tokenResult.Result, req);
-                    case "join":
-                        // Join Game
-                        break;
-                    case "start":
-                        // Start Game
-                        break;
-                    case "update":
-                        // Update Game
-                        break;
-                    case "roll":
-                        // Roll Dice
-                        break;
-                    case "addroll":
-                        // Add Roll Number
-                        break;
-                    case "placeleg":
                         // Place Leg Ticket
-                        break;
                     default:
 						return ServiceResult.FailedResult("Route not found", ServiceResponseCode.NotFound).ActionResult;
 				}

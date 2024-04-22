@@ -65,7 +65,7 @@ namespace CamelUpAutomation.Services
 			gameAction.DiceRoll = new DiceRoll
 			{
 				id = _cryptoService.GenerateRandomString(),
-				UserId = player.id,
+				PlayerId = player.id,
 				RollNumber = 0,
 				CamelColor = CamelColor.Blue
 			};
@@ -96,7 +96,7 @@ namespace CamelUpAutomation.Services
                 return validateLegBetResult;
             }
 			var gameAction = game.Actions.First();
-			gameAction.PlayerAction = PlayerAction.PlaceLegTicket;
+			gameAction.PlayerAction = PlayerAction.PlaceLegTicketBet;
 			gameAction.LegBet = new LegBet
 			{
                 id = _cryptoService.GenerateRandomString(),
@@ -365,7 +365,7 @@ namespace CamelUpAutomation.Services
 
 		private ServiceResult<Game> ValidateLegBettingTicket(Game game, string ticketId)
 		{
-            var legBets = game.Actions.Where(a => a.Round == game.Round && a.PlayerAction == PlayerAction.PlaceLegTicket);
+            var legBets = game.Actions.Where(a => a.Round == game.Round && a.PlayerAction == PlayerAction.PlaceLegTicketBet);
 			if (legBets.FirstOrDefault(b => b.LegBet.BettingTicketId == ticketId) != null)
 			{
 				return ServiceResult<Game>.FailedResult("Already have a bet on this ticket", ServiceResponseCode.Forbidden);

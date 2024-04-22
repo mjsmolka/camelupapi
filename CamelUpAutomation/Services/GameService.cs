@@ -18,7 +18,9 @@ namespace CamelUpAutomation.Services
     public interface IGameService
 	{
 		Task<ServiceResult<Game>> CreateGame(string name, string userId, bool isPrivate, string code);
-		Task<ServiceResult<IEnumerable<Game>>> GetGames(string userId, int skip, int take);
+		Task<ServiceResult<IEnumerable<Game>>> GetPublicGames(int skip, int take);
+		Task<ServiceResult<IEnumerable<Game>>> GetPlayerGames(string userId, int skip, int take);
+		Task<ServiceResult<IEnumerable<Game>>> GetGamesByOwner(string userId, int skip, int take);
 		Task<ServiceResult<Game>> UpdateGame(Game game, string userId);
 
 		Task<ServiceResult<Game>> GetGame(string gameId);
@@ -30,6 +32,8 @@ namespace CamelUpAutomation.Services
 		Task<ServiceResult> AddPartnership(string gameId, string userId, string partnershipPlayerId);
 		Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName, string code);
 		Task<ServiceResult<Game>> RemovePlayer(string gameId, string playerUserId, string userId);
+
+		Task<ServiceResult> DeleteGame(string gameId, string userId);
 	}
 
 	public class GameService : IGameService
@@ -40,12 +44,13 @@ namespace CamelUpAutomation.Services
 		private readonly IGameLogicService _gameLogicService;
 		private readonly IGameUserRepo _gameUserRepo;
 
-		public GameService(ICryptoService cryptoService, IGameRepo gameRepo, IGameLogicService gameLogicService, IGameUserRepo gameUserRepo)
+		public GameService(ICryptoService cryptoService, IGameRepo gameRepo, IGameLogicService gameLogicService, IGameUserRepo gameUserRepo, IUserService userService)
         {
             this._cryptoService = cryptoService;
             this._gameRepo = gameRepo;
             this._gameLogicService = gameLogicService;
             this._gameUserRepo = gameUserRepo;
+			this._userService = userService;
         }
 
          public async Task<ServiceResult<Game>> CreateGame(string name, string userId, bool isPrivate, string code)
@@ -54,10 +59,26 @@ namespace CamelUpAutomation.Services
 			{
                 return ServiceResult<Game>.FailedResult("Code is required for private games");
             }
+			var userResult = await _userService.GetUser(userId);
+			if (!userResult.IsSuccessful)
+			{
+				return ServiceResult<Game>.FailedResult("User not found");
+			}
+			var player = new Player
+			{
+                id = _cryptoService.GenerateRandomString(),
+                UserId = userId,
+                GameId = null,
+                Name = userResult.Result.UserName,
+                PartnerId = null,
+                PlayPosition = 0,
+                Balance = 3
+            };
+			var playerArray = new Player[] { player };
 			// create a game object 
 			Game game = new Game
 			{
-				id = _cryptoService.GenerateRandomString(),
+				id = _cryptoService.GenerateLowercaseString(),
 				IsPrivate = isPrivate,
 				Code = code,
 				Name = name,
@@ -66,11 +87,11 @@ namespace CamelUpAutomation.Services
 				RoundRoles = 0,
 				CreatedAt = DateTime.Now,
 				CreatedBy = userId,
-				Players = null,
+				Players = playerArray,
 				Camels = null,
 			};
-			GenerateBettingTickets(game);
 			AddCamels(game);
+			GenerateBettingTickets(game);
 			await _gameRepo.AddGame(game);
 			return ServiceResult<Game>.SuccessfulResult(game);
 		}
@@ -89,11 +110,32 @@ namespace CamelUpAutomation.Services
 			return ServiceResult<Game>.SuccessfulResult(dbGame);
         }
 
-		public async Task<ServiceResult<IEnumerable<Game>>> GetGames(string userId, int skip, int take)
+		public async Task<ServiceResult<IEnumerable<Game>>> GetPublicGames(int skip, int take)
+		{
+			
+            IEnumerable<Game> games = await _gameRepo.GetPublicGames(skip, take);
+            if (games == null)
+			{
+                return ServiceResult<IEnumerable<Game>>.FailedResult("No games found");
+            }
+            return ServiceResult<IEnumerable<Game>>.SuccessfulResult(games);
+        }
+
+		public async Task<ServiceResult<IEnumerable<Game>>> GetPlayerGames(string userId, int skip, int take)
 		{
 			IEnumerable<GameUser> gameUsers = await _gameUserRepo.GetGameUsersByUserId(userId);
 			string[] gameIds = gameUsers.Select(gu => gu.GameId).ToArray();
-            IEnumerable<Game> games = await _gameRepo.GetGames(userId, gameIds, skip, take);
+            IEnumerable<Game> games = await _gameRepo.GetGames(gameIds, skip, take);
+            if (games == null)
+			{
+                return ServiceResult<IEnumerable<Game>>.FailedResult("No games found");
+            }
+            return ServiceResult<IEnumerable<Game>>.SuccessfulResult(games);
+        }
+
+		public async Task<ServiceResult<IEnumerable<Game>>> GetGamesByOwner(string userId, int skip, int take)
+		{
+            IEnumerable<Game> games = await _gameRepo.GetGamesByOwner(userId, skip, take);
             if (games == null)
 			{
                 return ServiceResult<IEnumerable<Game>>.FailedResult("No games found");
@@ -303,6 +345,23 @@ namespace CamelUpAutomation.Services
 			return ServiceResult<Game>.SuccessfulResult(game);
         }
 
+		public async Task<ServiceResult> DeleteGame(string gameId, string userId)
+        {
+            ServiceResult<Game> gameResult = await GetGame(gameId);
+            if (!gameResult.IsSuccessful)
+            {
+                return gameResult;
+            }
+			var game = gameResult.Result;
+			if (game.CreatedBy != userId)
+			{
+				return ServiceResult<Game>.FailedResult("Only the creator of the game can remove players", ServiceResponseCode.Forbidden);
+			}
+			await _gameUserRepo.DeleteAllGameUsersByGameId(gameId);
+			await _gameRepo.DeleteGame(gameId);
+			return ServiceResult<Game>.SuccessfulResult(game);
+        }
+
         private void AddPlayerToGame(Game game, Models.Users.User User, string playerName)
 		{
 			IList<Player> playerList;
@@ -357,16 +416,22 @@ namespace CamelUpAutomation.Services
             IList<BettingTicket> bettingTickets = new List<BettingTicket>();
             foreach (CamelColor color in Enum.GetValues(typeof(CamelColor)))
 			{
+				Camel camel = game.Camels.FirstOrDefault(c => c.Color == color);
 				int[] winAmmounts = { 2, 2, 3, 5 };
 				foreach (int winAmount in winAmmounts)
 				{
 					BettingTicket bettingTicket = new BettingTicket
 					{
-						id = _cryptoService.GenerateRandomString(),
+						id = _cryptoService.GenerateLowercaseString(),
 						CamelColor = color,
-						WinAmount = winAmount
+						WinAmount = winAmount,
+						CamelId = camel.id
 					};
-					bettingTickets.Add(bettingTicket);
+					if (color != CamelColor.White && color != CamelColor.Black)
+					{
+						bettingTickets.Add(bettingTicket);
+					}
+					
 				}
 			}
             game.BettingTickets = bettingTickets.ToArray();

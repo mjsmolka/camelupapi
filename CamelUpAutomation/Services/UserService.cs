@@ -39,7 +39,7 @@ namespace CamelUpAutomation.Services
 				UserName = username,
 				PasswordHash = passwordHash
 			 };
-			 string userId = _cryptoService.GenerateRandomString();
+			 string userId = _cryptoService.GenerateLowercaseString();
 			 user.Id = userId;
 			 user.userId = userId; // this is the same as the id. Cosmos db requires the first letter to be lowercase
 		     user.id = userId;

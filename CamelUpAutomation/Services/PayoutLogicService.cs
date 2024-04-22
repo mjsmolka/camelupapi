@@ -38,7 +38,7 @@ namespace CamelUpAutomation.Services
 			var winningCamel = cameOrder.First();
 			var secondPlaceCamel = cameOrder.ElementAt(1);
 
-			var legBetActions = game.Actions.Where(a => a.PlayerAction == PlayerAction.PlaceLegTicket && a.Round == game.Round);
+			var legBetActions = game.Actions.Where(a => a.PlayerAction == PlayerAction.PlaceLegTicketBet && a.Round == game.Round);
 
 			var winningBets = legBetActions.Where(b => game.GetBettingTicket(b.LegBet.BettingTicketId).CamelId == winningCamel.id);
 			var secondPlaceBets = legBetActions.Where(b => game.GetBettingTicket(b.LegBet.BettingTicketId).CamelId == secondPlaceCamel.id);

@@ -12,7 +12,7 @@ namespace CamelUpAutomation.Enums
 
         RollDice,
         PlaceRaceBet,
-        PlaceLegTicket,
+        PlaceLegTicketBet,
 
         EnterPartnership,
         PatnershipPayOut,

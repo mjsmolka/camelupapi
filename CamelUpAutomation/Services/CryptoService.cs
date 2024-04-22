@@ -12,6 +12,7 @@ namespace CamelUpAutomation.Services
     public interface ICryptoService
     {
         string GenerateRandomString();
+        string GenerateLowercaseString();
         string GenerateRandomString(int length);
         string GeneratePasswordHash(string email, string password);
         string GenerateEmailConfirmationCodeHash(string code, EmailConfirmationCodeAction action);
@@ -29,6 +30,11 @@ namespace CamelUpAutomation.Services
             _config = config;
             salt = _config.GetValue<string>("CryptoSalt");
             slugLength = _config.GetValue<int>("CryptoSlugLength");
+        }
+
+        public string GenerateLowercaseString()
+        {
+            return GenerateRandomString(slugLength).ToLower();
         }
 
         public string GenerateRandomString()

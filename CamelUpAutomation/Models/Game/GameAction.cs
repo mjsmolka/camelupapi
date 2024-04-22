@@ -1,10 +1,4 @@
 ﻿using CamelUpAutomation.Enums;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow.Layouts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CamelUpAutomation.Models.Game
 {
@@ -50,7 +44,7 @@ namespace CamelUpAutomation.Models.Game
     public class DiceRoll
     {
         public string id { get; set; }
-        public string UserId { get; set; }
+        public string PlayerId { get; set; }
         public int RollNumber { get; set; }
         public string SpectatorTileId { get; set; }
         public CamelColor CamelColor { get; set; }

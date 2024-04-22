@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 namespace CamelUpAutomation.Enums
 {
-    public enum CamelColor
+    public enum GameChartMode
     {
-   
-        Blue,
-        Green,
-        Purple,
-        Red,
-        Yellow,
-        White,
-        Black, 
+        Public,
+        Active,
+        Created,
     }
 }

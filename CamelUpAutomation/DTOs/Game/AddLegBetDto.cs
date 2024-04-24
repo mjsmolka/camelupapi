@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CamelUpAutomation.DTOs.Game
+{
+    public class AddLegBetDto
+    {
+        [Required(ErrorMessage = "GameId is required")]
+        public string GameId { get; set; }
+
+        [Required(ErrorMessage = "TicketId is required")]
+        public string TicketId { get; set; }
+    }
+}

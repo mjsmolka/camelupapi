@@ -8,6 +8,8 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace CamelUpAutomation
@@ -31,6 +33,7 @@ namespace CamelUpAutomation
             builder.Services.AddSingleton<ICryptoService, CryptoService>();
             builder.Services.AddSingleton<IEmailConfirmationCodeService, EmailConfirmationCodeService>();
             builder.Services.AddSingleton<IGameLogicService, GameLogicService>();
+            builder.Services.AddSingleton<IPayoutLogicService, PayoutLogicService>();
 
             //Repos
             builder.Services.AddSingleton<IUserRepo, UserRepo>();
@@ -39,6 +42,9 @@ namespace CamelUpAutomation
             builder.Services.AddSingleton<IEmailConfirmationCodeRepo, EmailConfirmationCodeRepo>();
             builder.Services.AddSingleton<IGameRepo, GameRepo>();
             builder.Services.AddSingleton<IGameUserRepo, GameUserRepo>();
+
+            builder.Services.AddSignalR();
+
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using CamelUpAutomation.Enums;
 using CamelUpAutomation.Models.Game;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
+using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +21,8 @@ namespace CamelUpAutomation.Repos
 		Task UpdateGame(Game game);
 		Task DeleteGame(string email);
 	}
-
-	public class GameRepo : IGameRepo
-	{
+	  [SignalRConnection("AzureSignalRConnectionString")]
+	public class GameRepo :  Hub, IGameRepo	{
 		private readonly Container _gameContainer;
 		public GameRepo(IClientFactory clientFactory) {
 			_gameContainer = clientFactory.GetContainer(ContainerNames.Games);
@@ -86,7 +87,9 @@ namespace CamelUpAutomation.Repos
 		}
 		public async Task UpdateGame(Game game)
 		{
+
 			await _gameContainer.UpsertItemAsync(game, new PartitionKey(game.id));
+			// await Clients.Users(game.Players.Select(p => p.UserId).ToList()).SendAsync("gameUpdated", game);
 		}
 
 		public async Task DeleteGame(string id)

@@ -8,7 +8,6 @@ namespace CamelUpAutomation.Enums
 {
     public enum CamelColor
     {
-   
         Blue,
         Green,
         Purple,

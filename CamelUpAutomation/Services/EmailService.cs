@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 using CamelUpAutomation.Functions.Authentication;
 
 namespace CamelUpAutomation.Services
-{
+{ 
     public interface IEmailService
     {
         Task<bool> SendAsync(MailData mailData, CancellationToken ct);

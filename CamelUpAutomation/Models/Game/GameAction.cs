@@ -48,6 +48,7 @@ namespace CamelUpAutomation.Models.Game
         public int RollNumber { get; set; }
         public string SpectatorTileId { get; set; }
         public CamelColor CamelColor { get; set; }
+        public bool IsFinal { get; set; }
     }
 
     public class RaceBet

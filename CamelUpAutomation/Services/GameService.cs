@@ -22,18 +22,17 @@ namespace CamelUpAutomation.Services
 		Task<ServiceResult<IEnumerable<Game>>> GetPlayerGames(string userId, int skip, int take);
 		Task<ServiceResult<IEnumerable<Game>>> GetGamesByOwner(string userId, int skip, int take);
 		Task<ServiceResult<Game>> UpdateGame(Game game, string userId);
-
 		Task<ServiceResult<Game>> GetGame(string gameId);
 		Task<ServiceResult> PlaceSpectatorTile(string gameId, string userId, int tilePosition, CheerTileMode mode);
-		Task<ServiceResult> CreateRollAction(string gameId, string userId);
-		Task<ServiceResult> AddRollNumber(string gameId, int rollNumber, CamelColor color);
+		Task<ServiceResult> CreateRollAction(string gameId, string userId, bool autoroll = false);
+		Task<ServiceResult> AddRollNumber(string gameId, int rollNumber, CamelColor color, Game game = null);
 		Task<ServiceResult> AddLegBet(string gameId, string userId, string ticketId);
 		Task<ServiceResult> AddRaceBet(string gameId, string userId, CamelColor camelColor, bool isWinnerBet);
 		Task<ServiceResult> AddPartnership(string gameId, string userId, string partnershipPlayerId);
 		Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName, string code);
 		Task<ServiceResult<Game>> RemovePlayer(string gameId, string playerUserId, string userId);
-
 		Task<ServiceResult> DeleteGame(string gameId, string userId);
+		Task<ServiceResult<Game>> StartGame(string gameId, string userId);
 	}
 
 	public class GameService : IGameService
@@ -89,6 +88,8 @@ namespace CamelUpAutomation.Services
 				CreatedBy = userId,
 				Players = playerArray,
 				Camels = null,
+				PlayerPayOuts = new List<PlayerPayOut>().ToArray(),
+				Actions = new List<GameAction>().ToArray(),
 			};
 			AddCamels(game);
 			GenerateBettingTickets(game);
@@ -162,7 +163,7 @@ namespace CamelUpAutomation.Services
 			return ServiceResult.SuccessfulResult();
 		}
 
-		public async Task<ServiceResult> CreateRollAction(string gameId, string userId)
+		public async Task<ServiceResult> CreateRollAction(string gameId, string userId, bool autoroll = false)
 		{
 			ServiceResult<Game> validateGameAndPlayerResult = await ValidateGameAndPlayer(gameId, userId);
 			if (!validateGameAndPlayerResult.IsSuccessful)
@@ -176,19 +177,27 @@ namespace CamelUpAutomation.Services
 			{
                 return gameResult;
             }
-			await _gameRepo.UpdateGame(gameResult.Result);
+			if (!autoroll)
+			{
+				await _gameRepo.UpdateGame(gameResult.Result);
+				return ServiceResult.SuccessfulResult();
+			}
+			DiceRoll diceRoll = _gameLogicService.GenerateDiceRoll(game);
+			return await AddRollNumber(game.id, diceRoll.RollNumber, diceRoll.CamelColor, game);
 			// send to signal R
-			return ServiceResult.SuccessfulResult();
+			
 		}
 
-		public async Task<ServiceResult> AddRollNumber(string gameId, int rollNumber, CamelColor color)
-		{
-			ServiceResult<Game> gameResult = await GetGame(gameId);
-			if (!gameResult.IsSuccessful)
+		public async Task<ServiceResult> AddRollNumber(string gameId, int rollNumber, CamelColor color, Game game = null)
+		{	
+			if (game == null)
 			{
-                return gameResult;
-            }
-			var game = gameResult.Result;
+				ServiceResult<Game> gameResult = await GetGame(gameId);
+				if (!gameResult.IsSuccessful)
+				{
+					return gameResult;
+				}
+			} 
 			var gameLogicResult = _gameLogicService.AddRollNumber(game, rollNumber, color);
 			if (!gameLogicResult.IsSuccessful)
 			{
@@ -197,7 +206,7 @@ namespace CamelUpAutomation.Services
 			game = gameLogicResult.Result;
 			if (game.IsGameFinished())
 			{
-				gameResult = _gameLogicService.EndGame(game);
+				var gameResult = _gameLogicService.EndGame(game);
 				if (!gameResult.IsSuccessful)
 				{
                     return gameResult;
@@ -205,13 +214,14 @@ namespace CamelUpAutomation.Services
 			}
 			if (game.IsRoundFinished())
 			{
-				gameResult = _gameLogicService.EndLeg(game);
+				var gameResult = _gameLogicService.EndLeg(game);
 				if (!gameResult.IsSuccessful)
 				{
                     return gameResult;
                 }
 				game.RoundRoles = 0;
 			}
+			
 			await _gameRepo.UpdateGame(gameLogicResult.Result);
 			// send to signal R
 			return ServiceResult.SuccessfulResult();
@@ -361,6 +371,31 @@ namespace CamelUpAutomation.Services
 			await _gameRepo.DeleteGame(gameId);
 			return ServiceResult<Game>.SuccessfulResult(game);
         }
+
+		public async Task<ServiceResult<Game>> StartGame(string gameId, string userId)
+		{
+			ServiceResult<Game> gameResult = await GetGame(gameId);
+            if (!gameResult.IsSuccessful)
+            {
+                return gameResult;
+            }
+			var game = gameResult.Result;
+			if (game.CreatedBy != userId)
+			{
+				return ServiceResult<Game>.FailedResult("Only the creator of the game can start the game", ServiceResponseCode.Forbidden);
+			}
+			if (game.Players.Length < 2)
+			{
+                // return ServiceResult<Game>.FailedResult("Not enough players to start the game", ServiceResponseCode.Forbidden); TODO Add this again
+            }
+			if (game.Round > 0)
+			{
+                return ServiceResult<Game>.FailedResult("Game has already started", ServiceResponseCode.Forbidden);
+            }
+			game.Round = 1;
+			await _gameRepo.UpdateGame(game);
+			return ServiceResult<Game>.SuccessfulResult(game);
+		}
 
         private void AddPlayerToGame(Game game, Models.Users.User User, string playerName)
 		{

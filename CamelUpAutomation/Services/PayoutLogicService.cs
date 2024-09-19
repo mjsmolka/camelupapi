@@ -133,7 +133,7 @@ namespace CamelUpAutomation.Services
                     .FirstOrDefault();
                 var playerTwoHighestPayout = game.PlayerPayOuts
                     .Where(p =>
-                        p.PlayerId == playerOne.id &&
+                        p.PlayerId == playerTwo.id &&
                         p.Round == game.Round &&
                         p.PayOutType == PayOutType.LegTicketWin &&
                         p.Amount > 0
@@ -164,7 +164,7 @@ namespace CamelUpAutomation.Services
                         ActionId = action.id,
                         Round = game.Round,
                         Turn = game.Turn,
-                        Amount = playerOneHighestPayout.Amount,
+                        Amount = playerTwoHighestPayout.Amount,
                         BettingTicketId = playerTwoHighestPayout.BettingTicketId,
                         PayOutType = PayOutType.PartnershipWin
                     };
@@ -176,7 +176,7 @@ namespace CamelUpAutomation.Services
         private void GenerateRaceBetPayouts(Game game, Camel winningCamel, bool isWinner)
         {
             // generate a stack with 8, 5, 3, 2 with the first element to be popped is 8
-            var winAmountsStack = new Stack<int>(new int[] { 8, 5, 3, 2 });
+            var winAmountsStack = new Stack<int>(new int[] { 2, 3, 5, 8 });
             game.Actions
                 .Where(a =>
                     a.PlayerAction == PlayerAction.PlaceRaceBet &&

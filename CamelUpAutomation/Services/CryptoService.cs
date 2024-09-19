@@ -29,7 +29,7 @@ namespace CamelUpAutomation.Services
         {
             _config = config;
             salt = _config.GetValue<string>("CryptoSalt");
-            slugLength = _config.GetValue<int>("CryptoSlugLength");
+            slugLength = 20;
         }
 
         public string GenerateLowercaseString()

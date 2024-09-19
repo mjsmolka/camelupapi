@@ -16,8 +16,9 @@ namespace CamelUpAutomation.Models.Game
         public int Turn { get; set; }
         public int Round { get; set; }
         public int RoundRoles { get; set; }
-
         public string CreatedBy { get; set; }
+        public bool AutoRoll { get; set; }
+        public bool IsFinished { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

@@ -1,0 +1,36 @@
+﻿{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "connectionStringSetting": "CosmosDBConnection",
+    "CosmosDBConnectionString": "AccountEndpoint=https://cameldb.documents.azure.com:443/;AccountKey=kyGjooxdNBzAiooq70AUfNEzAuzy0sFeBXf350qWon3jwFbATgD3W6ossssNeV35z2fdpZrHuGIpACDboMxMsw==;",
+    "SendGridKey": "vTtI!DryOc6&JEDA&X9V8lbOg3F@CG",
+    "AzureSignalRConnectionString": "Endpoint=https://autocamel.service.signalr.net;AccessKey=2z3k2Jtbdwr69cZsFP9SxIgoyRWi1gUpVSdDFNB4uYs=;Version=1.0;",
+
+
+    "ResetPasswordActionUrl": "https://vowelblocks.beholddevelopment.com/reset",
+    "ActionUrl": "https://vowelblocks.beholddevelopment.com/action",
+
+    "JWTSecretKey": "732fa57ec510ee2db0a7e15926d00937a2d8debe837ea93ee64f1e6b1f7a27f4",
+
+    "JWTIssuer": "beholddevelopment",
+    "JWTAudience": "beholddevelopment",
+
+    "MailDisplayName": "Behold Development",
+    "MailFrom": "noreply@beholddevelopment.com",
+    "MailHost": "mail.beholddevelopment.com",
+    "MailPassword": "XM6f]!vK)M}H",
+    "MailPort": 465,
+    "MailUserName": "noreply@beholddevelopment.com",
+    "MailUseSSL": true,
+    "MailUseStartTls": false,
+
+    "CryptoSalt": "QHQqt2nIp784VVa4UCRl",
+    "CryptoSlugLength": 20
+  },
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "*"
+  }
+}

@@ -4,31 +4,28 @@ using CamelUpAutomation.Models.Game;
 using CamelUpAutomation.Models.Players;
 using CamelUpAutomation.Models.ReturnObjects;
 using CamelUpAutomation.Repos;
-using DurableTask.Core.History;
 using Microsoft.Azure.Cosmos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static CamelUpAutomation.Repos.GameUserRepo;
 
 namespace CamelUpAutomation.Services
 {
     public interface IGameService
 	{
-		Task<ServiceResult<Game>> CreateGame(string name, string userId, bool isPrivate, string code);
+		Task<ServiceResult<Game>> CreateGame(string name, string userId, bool autoRoll, bool isPrivate, string code);
 		Task<ServiceResult<IEnumerable<Game>>> GetPublicGames(int skip, int take);
 		Task<ServiceResult<IEnumerable<Game>>> GetPlayerGames(string userId, int skip, int take);
 		Task<ServiceResult<IEnumerable<Game>>> GetGamesByOwner(string userId, int skip, int take);
 		Task<ServiceResult<Game>> UpdateGame(Game game, string userId);
 		Task<ServiceResult<Game>> GetGame(string gameId);
-		Task<ServiceResult> PlaceSpectatorTile(string gameId, string userId, int tilePosition, CheerTileMode mode);
-		Task<ServiceResult> CreateRollAction(string gameId, string userId, bool autoroll = false);
-		Task<ServiceResult> AddRollNumber(string gameId, int rollNumber, CamelColor color, Game game = null);
-		Task<ServiceResult> AddLegBet(string gameId, string userId, string ticketId);
-		Task<ServiceResult> AddRaceBet(string gameId, string userId, CamelColor camelColor, bool isWinnerBet);
-		Task<ServiceResult> AddPartnership(string gameId, string userId, string partnershipPlayerId);
+		Task<ServiceResult<Game>> PlaceSpectatorTile(string gameId, string userId, int tilePosition, CheerTileMode mode);
+		Task<ServiceResult<Game>> CreateRollAction(string gameId, string userId);
+		Task<ServiceResult<Game>> AddRollNumber(string gameId, int rollNumber, CamelColor color, Game game = null);
+		Task<ServiceResult<Game>> AddLegBet(string gameId, string userId, string ticketId);
+		Task<ServiceResult<Game>> AddRaceBet(string gameId, string userId, CamelColor camelColor, bool isWinnerBet);
+		Task<ServiceResult<Game>> AddPartnership(string gameId, string userId, string partnershipPlayerId);
 		Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName, string code);
 		Task<ServiceResult<Game>> RemovePlayer(string gameId, string playerUserId, string userId);
 		Task<ServiceResult> DeleteGame(string gameId, string userId);
@@ -42,17 +39,21 @@ namespace CamelUpAutomation.Services
 		private readonly IGameRepo _gameRepo;
 		private readonly IGameLogicService _gameLogicService;
 		private readonly IGameUserRepo _gameUserRepo;
+		private readonly ISignalRService _signalRService;
+		private readonly ICamelService _camelService;
 
-		public GameService(ICryptoService cryptoService, IGameRepo gameRepo, IGameLogicService gameLogicService, IGameUserRepo gameUserRepo, IUserService userService)
+		public GameService(ICryptoService cryptoService, IGameRepo gameRepo, IGameLogicService gameLogicService, IGameUserRepo gameUserRepo, IUserService userService, ISignalRService signalRService, ICamelService camelService)
         {
             this._cryptoService = cryptoService;
             this._gameRepo = gameRepo;
             this._gameLogicService = gameLogicService;
             this._gameUserRepo = gameUserRepo;
 			this._userService = userService;
+			this._signalRService = signalRService;
+			this._camelService = camelService;
         }
 
-         public async Task<ServiceResult<Game>> CreateGame(string name, string userId, bool isPrivate, string code)
+         public async Task<ServiceResult<Game>> CreateGame(string name, string userId, bool autoRoll, bool isPrivate, string code)
 		{
 			if (isPrivate && string.IsNullOrEmpty(code))
 			{
@@ -69,7 +70,6 @@ namespace CamelUpAutomation.Services
                 UserId = userId,
                 GameId = null,
                 Name = userResult.Result.UserName,
-                PartnerId = null,
                 PlayPosition = 0,
                 Balance = 3
             };
@@ -84,6 +84,7 @@ namespace CamelUpAutomation.Services
 				Turn = 0,
 				Round = 0, // setting round to 1 starts the game 
 				RoundRoles = 0,
+				AutoRoll = autoRoll,
 				CreatedAt = DateTime.Now,
 				CreatedBy = userId,
 				Players = playerArray,
@@ -108,6 +109,7 @@ namespace CamelUpAutomation.Services
 			dbGame.IsPrivate = game.IsPrivate;
 			dbGame.Name = game.Name;
 			await _gameRepo.UpdateGame(dbGame);
+			await _signalRService.SendGameUpdate(dbGame);
 			return ServiceResult<Game>.SuccessfulResult(dbGame);
         }
 
@@ -144,7 +146,7 @@ namespace CamelUpAutomation.Services
             return ServiceResult<IEnumerable<Game>>.SuccessfulResult(games);
         }
 
-		public async Task<ServiceResult> PlaceSpectatorTile(string gameId, string userId, int tilePosition, CheerTileMode mode)
+		public async Task<ServiceResult<Game>> PlaceSpectatorTile(string gameId, string userId, int tilePosition, CheerTileMode mode)
 		{
 			ServiceResult<Game> validateGameAndPlayerResult = await ValidateGameAndPlayer(gameId, userId);
 			if (!validateGameAndPlayerResult.IsSuccessful)
@@ -159,11 +161,12 @@ namespace CamelUpAutomation.Services
                 return gameResult;
             }
 			await _gameRepo.UpdateGame(gameResult.Result);
+			await _signalRService.SendGameUpdate(game);
 			// send to signal R
-			return ServiceResult.SuccessfulResult();
+			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
-		public async Task<ServiceResult> CreateRollAction(string gameId, string userId, bool autoroll = false)
+		public async Task<ServiceResult<Game>> CreateRollAction(string gameId, string userId)
 		{
 			ServiceResult<Game> validateGameAndPlayerResult = await ValidateGameAndPlayer(gameId, userId);
 			if (!validateGameAndPlayerResult.IsSuccessful)
@@ -177,10 +180,11 @@ namespace CamelUpAutomation.Services
 			{
                 return gameResult;
             }
-			if (!autoroll)
+			if (!game.AutoRoll)
 			{
 				await _gameRepo.UpdateGame(gameResult.Result);
-				return ServiceResult.SuccessfulResult();
+				await _signalRService.SendGameUpdate(game);
+				return ServiceResult<Game>.SuccessfulResult(game);
 			}
 			DiceRoll diceRoll = _gameLogicService.GenerateDiceRoll(game);
 			return await AddRollNumber(game.id, diceRoll.RollNumber, diceRoll.CamelColor, game);
@@ -188,7 +192,7 @@ namespace CamelUpAutomation.Services
 			
 		}
 
-		public async Task<ServiceResult> AddRollNumber(string gameId, int rollNumber, CamelColor color, Game game = null)
+		public async Task<ServiceResult<Game>> AddRollNumber(string gameId, int rollNumber, CamelColor color, Game game = null)
 		{	
 			if (game == null)
 			{
@@ -197,6 +201,7 @@ namespace CamelUpAutomation.Services
 				{
 					return gameResult;
 				}
+				game = gameResult.Result;
 			} 
 			var gameLogicResult = _gameLogicService.AddRollNumber(game, rollNumber, color);
 			if (!gameLogicResult.IsSuccessful)
@@ -223,11 +228,12 @@ namespace CamelUpAutomation.Services
 			}
 			
 			await _gameRepo.UpdateGame(gameLogicResult.Result);
+			await _signalRService.SendGameUpdate(game);
 			// send to signal R
-			return ServiceResult.SuccessfulResult();
+			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
-		public async Task<ServiceResult> AddLegBet(string gameId, string userId, string ticketId)
+		public async Task<ServiceResult<Game>> AddLegBet(string gameId, string userId, string ticketId)
 		{
 			ServiceResult<Game> validateGameAndPlayerResult = await ValidateGameAndPlayer(gameId, userId);
 			if (!validateGameAndPlayerResult.IsSuccessful)
@@ -243,11 +249,12 @@ namespace CamelUpAutomation.Services
                 return gameResult;
             }
 			await _gameRepo.UpdateGame(gameResult.Result);
+			await _signalRService.SendGameUpdate(game);
 			// send to signal R
-			return ServiceResult.SuccessfulResult();
+			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
-		public async Task<ServiceResult> AddRaceBet(string gameId, string userId, CamelColor camelColor, bool isWinnerBet)
+		public async Task<ServiceResult<Game>> AddRaceBet(string gameId, string userId, CamelColor camelColor, bool isWinnerBet)
 		{
 			ServiceResult<Game> validateGameAndPlayerResult = await ValidateGameAndPlayer(gameId, userId);
 			if (!validateGameAndPlayerResult.IsSuccessful)
@@ -262,11 +269,12 @@ namespace CamelUpAutomation.Services
                 return gameResult;
             }
 			await _gameRepo.UpdateGame(gameResult.Result);
+			await _signalRService.SendGameUpdate(game);
 			// send to signal R
-			return ServiceResult.SuccessfulResult();
+			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
-		public async Task<ServiceResult> AddPartnership(string gameId, string userId, string partnershipPlayerId)
+		public async Task<ServiceResult<Game>> AddPartnership(string gameId, string userId, string partnershipPlayerId)
 		{
 			ServiceResult<Game> validateGameAndPlayerResult = await ValidateGameAndPlayer(gameId, userId);
 			if (!validateGameAndPlayerResult.IsSuccessful)
@@ -274,9 +282,9 @@ namespace CamelUpAutomation.Services
 				return validateGameAndPlayerResult;
 			}
 			var game = validateGameAndPlayerResult.Result;
-			if (game.Players.Length < 6)
+			if (game.Players.Length < 0) // TODO return to 6
 			{
-				return ServiceResult.FailedResult("Not enough players to add partnership");
+				return ServiceResult<Game>.FailedResult("Not enough players to add partnership");
 			}
 			var playerOne = game.Players.FirstOrDefault(p => p.UserId == userId);
 			var playerTwo = game.Players.FirstOrDefault(p => p.id == partnershipPlayerId);
@@ -286,8 +294,8 @@ namespace CamelUpAutomation.Services
                 return gameResult;
             }
 			await _gameRepo.UpdateGame(gameResult.Result);
-			// send to signal R
-			return ServiceResult.SuccessfulResult();
+			await _signalRService.SendGameUpdate(game);
+			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
 		public async Task<ServiceResult<Game>> AddPlayer(string gameId, string userId, string playerName, string code)
@@ -319,6 +327,7 @@ namespace CamelUpAutomation.Services
                 GameId = game.id,
                 UserId = user.id
             });
+			await _signalRService.SendGameUpdate(game);
 			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
@@ -352,6 +361,7 @@ namespace CamelUpAutomation.Services
             game.Players = game.Players.Where(p => p.UserId != userId).ToArray();
 			await _gameUserRepo.DeleteGameUser(userId);
 			await _gameRepo.UpdateGame(game);
+			await _signalRService.SendGameUpdate(game);
 			return ServiceResult<Game>.SuccessfulResult(game);
         }
 
@@ -393,7 +403,9 @@ namespace CamelUpAutomation.Services
                 return ServiceResult<Game>.FailedResult("Game has already started", ServiceResponseCode.Forbidden);
             }
 			game.Round = 1;
+			_camelService.MoveCrazyCamels(game);
 			await _gameRepo.UpdateGame(game);
+			await _signalRService.SendGameUpdate(game);
 			return ServiceResult<Game>.SuccessfulResult(game);
 		}
 
@@ -415,7 +427,6 @@ namespace CamelUpAutomation.Services
 				UserId = User.id,
 				GameId = game.id,
 				Name = playerName,
-				PartnerId = null,
 				PlayPosition = playerList.Count,
 				Balance = 3
 			};
@@ -441,6 +452,12 @@ namespace CamelUpAutomation.Services
 			{
 				return ServiceResult<Game>.FailedResult("Game has not started yet", ServiceResponseCode.Forbidden);
 			}
+			var i = game.Turn % game.Players.Length;
+			if (game.Players[i].UserId != userId)
+			{
+                return ServiceResult<Game>.FailedResult("Not your turn", ServiceResponseCode.Forbidden);
+            }
+
 			return gameResult;
 		}
 
@@ -477,13 +494,14 @@ namespace CamelUpAutomation.Services
             IList<Camel> camels = new List<Camel>();
             foreach (CamelColor color in Enum.GetValues(typeof(CamelColor)))
 			{
+				var crazyCamel = (color == CamelColor.White || color == CamelColor.Black);
                 Camel camel = new Camel
 				{
                     id = _cryptoService.GenerateRandomString(),
                     Color = color,
-                    Position = 0,
+                    Position = crazyCamel ? 17 : 0,
                     Height = 0,
-                    IsCrazyCamel = (color == CamelColor.White || color == CamelColor.Black)
+                    IsCrazyCamel = crazyCamel,
                 };
                 camels.Add(camel);
             }
@@ -498,6 +516,5 @@ namespace CamelUpAutomation.Services
             }
             return ServiceResult<Game>.SuccessfulResult(game);
         }
-
 	}
 }

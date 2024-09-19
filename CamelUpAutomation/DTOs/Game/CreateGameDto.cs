@@ -14,6 +14,10 @@ namespace CamelUpAutomation.DTOs.Game
 
         [Required(ErrorMessage = "IsPrivate is required")]
         public bool IsPrivate { get; set; }
+
+        
+        [Required(ErrorMessage = "AutoRoll is required")]
+        public bool AutoRoll { get; set; }
         public string Code { get; set; }
     }
 }

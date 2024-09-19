@@ -19,40 +19,22 @@ namespace CamelUpAutomation.Services
 {
     public interface IValidatorService
     {
-        public ServiceResult ValidateHttpRequest(HttpRequest req);
-
-        public Task<ServiceResult<T>> ValidateDto<T>(HttpRequest req);
+        public ServiceResult<T> ValidateDto<T>(T dto);
     }
 
     public class ValidatorService : IValidatorService
     {
         // generate a static class to generate a random string with letters and numbers 
-        public async Task<ServiceResult<T>> ValidateDto<T>(HttpRequest req)
+        public ServiceResult<T> ValidateDto<T>(T dto)
         {
             try
             {
-                var options = new JsonSerializerOptions();
-                options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                T reqBody = await req.ReadFromJsonAsync<T>(options);
-                Validator.ValidateObject(reqBody, new ValidationContext(reqBody), validateAllProperties: true);
-                return ServiceResult<T>.SuccessfulResult(reqBody);
+                Validator.ValidateObject(dto, new ValidationContext(dto), validateAllProperties: true);
+                return ServiceResult<T>.SuccessfulResult(dto);
             } catch (ValidationException exception)
             {
                 return ServiceResult<T>.FailedResult(exception.Message, ServiceResponseCode.BadRequest);
             }
-        }
-
-        public ServiceResult ValidateHttpRequest(HttpRequest req)
-        {
-            if (!req.IsJsonContentType())
-            {
-                return ServiceResult.FailedResult("Cannot deserialize request because it does not represent a valid JSON content");
-            }
-            if (req.ContentLength >= 1024)
-            {
-                 return ServiceResult.FailedResult("Cannot deserialize request because its content is bigger than expected");
-            }
-            return null;
         }
     }
 }

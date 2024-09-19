@@ -16,7 +16,7 @@ namespace CamelUpAutomation.Models.Game
         public int Turn;
 
         public int Amount;
-        public string? BettingTicketId;
+        public string BettingTicketId;
         public PayOutType PayOutType;
         
     }

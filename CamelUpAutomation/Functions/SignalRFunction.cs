@@ -14,39 +14,26 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols;
-using Newtonsoft.Json;
-using Microsoft.Azure.SignalR.Management;
-using Microsoft.AspNetCore.SignalR;
+using CamelUpAutomation.Services;
 
 namespace CSharp
 {
-    [SignalRConnection("AzureSignalRConnectionString")]
-    public class SignalRFunction : ServerlessHub
+    
+    public class SignalRFunction
     {
         private readonly IAuthService _authService;
+        private readonly IGameService _gameService;
+        private readonly ISignalRService _signalRService;
 
-        public SignalRFunction(IAuthService authService, IConfiguration config) /*: base(serviceProvider) */
+        public SignalRFunction(IAuthService authService,
+            IValidatorService validatorService,
+            ISignalRService signalRService,
+            IGameService gameService, 
+            IConfiguration config)
         {
             _authService = authService;
-        }
-
-        [FunctionName("CosmosTrigger")]
-        public async Task Run([CosmosDBTrigger(
-            databaseName: "CamelUp",
-            containerName:"Games",
-            Connection = "CosmosDBConnectionString",
-            LeaseContainerName = "leases",
-            CreateLeaseContainerIfNotExists = true
-          )] IReadOnlyList<Game> updatedGames)
-        {
-            if (updatedGames is not null && updatedGames.Any())
-            {
-                foreach (var doc in updatedGames)
-                {
-                   await Clients.Users(doc.Players.Select(p => p.UserId).ToList()).SendAsync("gameUpdated", doc);
-                }
-            }
+            _gameService = gameService;
+            _signalRService = signalRService;
         }
 
         [FunctionName("negotiate")]
@@ -60,8 +47,8 @@ namespace CSharp
             {
                 return tokenResult.ActionResult;
             }
-            var negotiateResponse = await NegotiateAsync(new() { UserId = tokenResult.Result });
-            return (ServiceResult<SignalRConnectionInfo>.SuccessfulResult(negotiateResponse)).ActionResult;
+            var negotiateResponse = await _signalRService.Negotiate(tokenResult.Result);
+            return negotiateResponse.ActionResult;
         }
     }
 }

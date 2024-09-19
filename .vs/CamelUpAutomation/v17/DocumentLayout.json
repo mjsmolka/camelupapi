@@ -1,0 +1,633 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\functions\\gamefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\functions\\gamefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\gameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\gameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\host.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\host.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\local.settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\local.settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\validatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\validatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\functions\\authenticationfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\functions\\authenticationfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\functions\\functionnames.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\functions\\functionnames.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\functions\\signalrfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\functions\\signalrfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\function1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\function1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\camelupautomation.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\camelupautomation.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\cryptoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\cryptoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\payoutlogicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\payoutlogicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\gamelogicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\gamelogicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\models\\players\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\models\\players\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\models\\game\\gameuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\models\\game\\gameuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\models\\game\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\models\\game\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\game\\joingamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\game\\joingamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\models\\game\\playerbet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\models\\game\\playerbet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\game\\addpartnershipdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\game\\addpartnershipdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\game\\addlegbetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\game\\addlegbetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\auth\\verifyemaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\auth\\verifyemaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\files\\emailtemplates\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\files\\emailtemplates\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\files\\emailtemplates\\verifyemail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\files\\emailtemplates\\verifyemail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\auth\\policies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\auth\\policies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\auth\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\auth\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\auth\\requestchangepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\auth\\requestchangepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\emailconfirmationcodeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\emailconfirmationcodeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\models\\game\\gameaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\models\\game\\gameaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\services\\camelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\services\\camelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\game\\creategamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\game\\creategamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|c:\\users\\martinsmolka\\projects\\camelupautomation\\camelupautomation\\dtos\\game\\addracebetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{105C778D-0F8A-48C6-B785-D7DE9E88E81D}|CamelUpAutomation\\CamelUpAutomation.csproj|solutionrelative:camelupautomation\\dtos\\game\\addracebetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 1388,
+          "SelectedChildIndex": 13,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "local.settings.json",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\local.settings.json",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\local.settings.json",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\local.settings.json",
+              "RelativeToolTip": "CamelUpAutomation\\local.settings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-04-30T02:40:26.753Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "settings.json",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\settings.json",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\settings.json",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\settings.json",
+              "RelativeToolTip": "CamelUpAutomation\\settings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-04-30T02:40:22.529Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Player.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Players\\Player.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Models\\Players\\Player.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Players\\Player.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Models\\Players\\Player.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T23:36:42.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "AddPartnershipDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\AddPartnershipDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Game\\AddPartnershipDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\AddPartnershipDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Game\\AddPartnershipDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:54:03.014Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AddLegBetDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\AddLegBetDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Game\\AddLegBetDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\AddLegBetDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Game\\AddLegBetDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:53:59.865Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "JoinGameDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\JoinGameDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Game\\JoinGameDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\JoinGameDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Game\\JoinGameDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwA8AAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:53:39.482Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "VerifyEmailDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Auth\\VerifyEmailDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Auth\\VerifyEmailDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Auth\\VerifyEmailDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Auth\\VerifyEmailDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:17:03.172Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ResetPassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Files\\EmailTemplates\\ResetPassword.cshtml",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Files\\EmailTemplates\\ResetPassword.cshtml",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Files\\EmailTemplates\\ResetPassword.cshtml",
+              "RelativeToolTip": "CamelUpAutomation\\Files\\EmailTemplates\\ResetPassword.cshtml",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAcwFcAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-29T19:15:24.23Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameFunctions.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\GameFunctions.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Functions\\GameFunctions.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\GameFunctions.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Functions\\GameFunctions.cs",
+              "ViewState": "AQIAANMAAAAAAAAAAAAswOkAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T11:52:57.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Function1.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Function1.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Function1.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Function1.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Function1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T02:49:44.242Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "host.json",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\host.json",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\host.json",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\host.json",
+              "RelativeToolTip": "CamelUpAutomation\\host.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-04-30T02:58:39.057Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CamelUpAutomation.csproj",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\CamelUpAutomation.csproj",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\CamelUpAutomation.csproj",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\CamelUpAutomation.csproj",
+              "RelativeToolTip": "CamelUpAutomation\\CamelUpAutomation.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-04-30T12:35:10.61Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ValidatorService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\ValidatorService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\ValidatorService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\ValidatorService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\ValidatorService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwBsAAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T22:56:54.205Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Policies.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Auth\\Policies.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Auth\\Policies.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Auth\\Policies.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Auth\\Policies.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:12:46.187Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Auth\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Auth\\RegisterDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Auth\\RegisterDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Auth\\RegisterDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:11:53.825Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "RequestChangePasswordDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Auth\\RequestChangePasswordDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Auth\\RequestChangePasswordDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Auth\\RequestChangePasswordDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Auth\\RequestChangePasswordDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:11:51.543Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Auth\\AuthService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Auth\\AuthService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Auth\\AuthService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Auth\\AuthService.cs",
+              "ViewState": "AQIAAHUAAAAAAAAAAAAMwJkAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T19:01:59.214Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AuthenticationFunction.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\AuthenticationFunction.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Functions\\AuthenticationFunction.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\AuthenticationFunction.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Functions\\AuthenticationFunction.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAADMAAABLAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T18:26:57.369Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "VerifyEmail.cshtml",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Files\\EmailTemplates\\VerifyEmail.cshtml",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Files\\EmailTemplates\\VerifyEmail.cshtml",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Files\\EmailTemplates\\VerifyEmail.cshtml",
+              "RelativeToolTip": "CamelUpAutomation\\Files\\EmailTemplates\\VerifyEmail.cshtml",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAcwIcAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-29T18:24:45.782Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\EmailService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\EmailService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\EmailService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\EmailService.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAuwCsAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T18:02:43.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PayoutLogicService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\PayoutLogicService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\PayoutLogicService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\PayoutLogicService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\PayoutLogicService.cs",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAwwHkAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T17:10:50.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\UserService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\UserService.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T15:14:44.023Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SignalRService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\SignalRService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\SignalRService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\SignalRService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\SignalRService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T15:14:43.108Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CryptoService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\CryptoService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\CryptoService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\CryptoService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\CryptoService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T14:53:49.614Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "PlayerBet.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\PlayerBet.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Models\\Game\\PlayerBet.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\PlayerBet.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Models\\Game\\PlayerBet.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T13:46:18.672Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "CreateGameDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\CreateGameDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Game\\CreateGameDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\CreateGameDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Game\\CreateGameDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T12:31:51.826Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "GameUser.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\GameUser.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Models\\Game\\GameUser.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\GameUser.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Models\\Game\\GameUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T12:29:32.614Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "GameAction.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\GameAction.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Models\\Game\\GameAction.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\GameAction.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Models\\Game\\GameAction.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T12:29:28.858Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "GameLogicService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\GameLogicService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\GameLogicService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\GameLogicService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\GameLogicService.cs",
+              "ViewState": "AQIAAKQAAAAAAAAAAAAAwL4AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T12:28:07.932Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Game.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\Game.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Models\\Game\\Game.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Models\\Game\\Game.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Models\\Game\\Game.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T12:27:26.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "EmailConfirmationCodeService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\EmailConfirmationCodeService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\EmailConfirmationCodeService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\EmailConfirmationCodeService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\EmailConfirmationCodeService.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAtwC4AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T20:59:43.133Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Startup.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Startup.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Startup.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Startup.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Startup.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAQwCAAAABLAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T12:21:10.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "CamelService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\CamelService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\CamelService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\CamelService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\CamelService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-29T12:03:04.601Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "AddRaceBetDto.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\AddRaceBetDto.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\DTOs\\Game\\AddRaceBetDto.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\DTOs\\Game\\AddRaceBetDto.cs",
+              "RelativeToolTip": "CamelUpAutomation\\DTOs\\Game\\AddRaceBetDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAoAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T13:55:43.084Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameService.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\GameService.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Services\\GameService.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Services\\GameService.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Services\\GameService.cs",
+              "ViewState": "AQIAAH0BAAAAAAAAAAAswJ4BAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T13:51:11.068Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SignalRFunction.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\SignalRFunction.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Functions\\SignalRFunction.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\SignalRFunction.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Functions\\SignalRFunction.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAUwDAAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T11:52:56.237Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FunctionNames.cs",
+              "DocumentMoniker": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\FunctionNames.cs",
+              "RelativeDocumentMoniker": "CamelUpAutomation\\Functions\\FunctionNames.cs",
+              "ToolTip": "C:\\Users\\MartinSmolka\\Projects\\CamelUpAutomation\\CamelUpAutomation\\Functions\\FunctionNames.cs",
+              "RelativeToolTip": "CamelUpAutomation\\Functions\\FunctionNames.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwBkAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T11:52:55.482Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

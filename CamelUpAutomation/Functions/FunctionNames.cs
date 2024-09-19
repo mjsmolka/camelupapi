@@ -18,9 +18,12 @@ namespace CamelUpAutomation.Functions
         public const string AuthConfirmEmail = "AuthConfirmEmailAction";
         public const string AuthResetPassword = "AuthResetPasswordAction";
         public const string AuthChangePassword = "AuthChangePasswordAction";
+        public const string AuthRequestChangePassword = "AuthRequestChangePasswordAction"; // 'Forgot PasswordA
         public const string AuthChangeEmail = "AuthChangeEmailAction";
         public const string AuthLogout = "AuthLogoutAction";
         public const string AuthDeleteAccount = "AuthDeleteAccountAction";
+
+        public const string Ping = "PingAction";
 
         /* ---------------------- Game --------------------- */ 
 

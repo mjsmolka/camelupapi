@@ -21,8 +21,7 @@ namespace CamelUpAutomation.Repos
 		Task UpdateGame(Game game);
 		Task DeleteGame(string email);
 	}
-	  [SignalRConnection("AzureSignalRConnectionString")]
-	public class GameRepo :  Hub, IGameRepo	{
+	public class GameRepo : IGameRepo	{
 		private readonly Container _gameContainer;
 		public GameRepo(IClientFactory clientFactory) {
 			_gameContainer = clientFactory.GetContainer(ContainerNames.Games);
@@ -87,9 +86,7 @@ namespace CamelUpAutomation.Repos
 		}
 		public async Task UpdateGame(Game game)
 		{
-
-			await _gameContainer.UpsertItemAsync(game, new PartitionKey(game.id));
-			// await Clients.Users(game.Players.Select(p => p.UserId).ToList()).SendAsync("gameUpdated", game);
+			await _gameContainer.UpsertItemAsync(game, new PartitionKey(game.id));	
 		}
 
 		public async Task DeleteGame(string id)

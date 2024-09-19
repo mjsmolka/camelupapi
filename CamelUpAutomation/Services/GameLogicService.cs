@@ -54,7 +54,11 @@ namespace CamelUpAutomation.Services
                 Mode = mode,
             };
 
-            AddGameActionToGame(game, gameAction);
+            var addActionResult = AddGameActionToGame(game, gameAction);
+            if (!addActionResult.IsSuccessful)
+            {
+                return addActionResult;
+            }
             game.Turn += 1;
             return ServiceResult<Game>.SuccessfulResult(game);
         }
@@ -71,7 +75,11 @@ namespace CamelUpAutomation.Services
                 CamelColor = CamelColor.Blue,
                 IsFinal = false
             };
-            AddGameActionToGame(game, gameAction);
+            var addActionResult = AddGameActionToGame(game, gameAction);
+            if (!addActionResult.IsSuccessful)
+            {
+                return addActionResult;
+            }
             return ServiceResult<Game>.SuccessfulResult(game);
         }
 
@@ -105,7 +113,7 @@ namespace CamelUpAutomation.Services
             {
                 return validateLegBetResult;
             }
-            var gameAction = game.Actions.First();
+            var gameAction = GenerateGameAction(game);
             gameAction.PlayerAction = PlayerAction.PlaceLegTicketBet;
             gameAction.LegBet = new LegBet
             {
@@ -113,7 +121,11 @@ namespace CamelUpAutomation.Services
                 BettingTicketId = ticket.id,
                 PlayerId = player.id
             };
-            AddGameActionToGame(game, gameAction);
+            var addActionResult = AddGameActionToGame(game, gameAction);
+            if (!addActionResult.IsSuccessful)
+            {
+                return addActionResult;
+            }
             game.Turn += 1;
             return ServiceResult<Game>.SuccessfulResult(game);
         }
@@ -135,7 +147,11 @@ namespace CamelUpAutomation.Services
                 CamelColor = camelColor,
                 IsWinnerBet = isWinnerBet
             };
-            AddGameActionToGame(game, gameAction);
+            var addActionResult = AddGameActionToGame(game, gameAction);
+            if (!addActionResult.IsSuccessful)
+            {
+                return addActionResult;
+            }
             game.Turn += 1;
             return ServiceResult<Game>.SuccessfulResult(game);
         }
@@ -156,7 +172,11 @@ namespace CamelUpAutomation.Services
                 PartnerOneId = playerOne.id,
                 PartnerTwoId = playerTwo.id
             };
-            AddGameActionToGame(game, gameAction);
+            var addActionResult = AddGameActionToGame(game, gameAction);
+            if (!addActionResult.IsSuccessful)
+            {
+                return addActionResult;
+            }
             game.Turn += 1;
             return ServiceResult<Game>.SuccessfulResult(game);
         }
@@ -186,6 +206,7 @@ namespace CamelUpAutomation.Services
             {
                 return ServiceResult<Game>.FailedResult("Cannot end game", ServiceResponseCode.Forbidden);
             }
+            game.IsFinished = true;
             _payoutLogicService.AddRaceBetPayouts(game);
             return ServiceResult<Game>.SuccessfulResult(game);
         }
@@ -198,7 +219,9 @@ namespace CamelUpAutomation.Services
             var rollNumber = lastAction.DiceRoll.RollNumber;
 
             // crazy camels go backwards
-            if (camelsToMove.First().IsCrazyCamel) { rollNumber = -rollNumber; };
+            if (camelsToMove.First().IsCrazyCamel) { 
+                rollNumber = -rollNumber;
+            };
 
             var newCamelPosition = camelsToMove.First().Position + rollNumber;
             var spectatorTile = GetSpectatorTile(game, newCamelPosition);
@@ -217,7 +240,7 @@ namespace CamelUpAutomation.Services
             {
                 return;
             }
-            var camelStackAtNewPosition = game.Camels.Where(c => c.Position == newCamelPosition).OrderBy(c => c.Height).ToList();
+            var camelStackAtNewPosition = game.Camels.Where(c => c.Position == newCamelPosition && !camelsToMove.Any(x => x.Color == c.Color)).OrderBy(c => c.Height).ToList();
 
             if (sendToBottom)
             {
@@ -266,7 +289,7 @@ namespace CamelUpAutomation.Services
         private IEnumerable<Camel> GetCamelStack(Game game, CamelColor color)
         {
             Camel camelToMove = game.Camels.FirstOrDefault(c => c.Color == color);
-            if (camelToMove.Position == 0)
+            if (camelToMove.Position == 0 || camelToMove.Position == 17)
             {
                 return new List<Camel> { camelToMove };
             }
@@ -289,11 +312,11 @@ namespace CamelUpAutomation.Services
                 return blackStack;
             }
             // if a crazy camel has a racing camel on top of it while the other one doesn't, the one with the racing camel is taken
-            if (blackStack.Count() > 1 && whiteStack.Count() == 0)
+            if (blackStack.Count() > 1 && whiteStack.Count() == 1)
             {
                 return blackStack;
             }
-            if (whiteStack.Count() > 1 && blackStack.Count() == 0)
+            if (whiteStack.Count() > 1 && blackStack.Count() == 1)
             {
                 return whiteStack;
             }
@@ -333,8 +356,12 @@ namespace CamelUpAutomation.Services
             return ServiceResult<Game>.SuccessfulResult(game);
         }
 
-        private void AddGameActionToGame(Game game, GameAction gameAction)
+        private ServiceResult<Game> AddGameActionToGame(Game game, GameAction gameAction)
         {
+            if (game.IsGameFinished())
+            {
+                 return ServiceResult<Game>.FailedResult("Cannot Place a spectator tile next to each other", ServiceResponseCode.Forbidden);
+            }
             IList<GameAction> actions;
             if (game.Actions == null)
             {
@@ -346,6 +373,7 @@ namespace CamelUpAutomation.Services
             }
             actions.Add(gameAction);
             game.Actions = actions.ToArray();
+            return ServiceResult<Game>.SuccessfulResult(game);
         }
 
         private ServiceResult<Game> ValidateAddRaceBet(Game game, Player player, CamelColor camel)
@@ -412,14 +440,12 @@ namespace CamelUpAutomation.Services
             var round = game.Round;
             var roles = game.Actions.Where(a => a.Round == round && a.PlayerAction == PlayerAction.RollDice && a.DiceRoll.IsFinal).ToList();
             // iterate through each role but skip the first one if ignoreLast is true
-        
-            roles.ForEach(r => camelColorList.Remove(r.DiceRoll.CamelColor));
-            if (camelColorList.Select(c => c == CamelColor.Black || c == CamelColor.White).Count() == 0)
+            if (roles.FirstOrDefault(x => x.DiceRoll.CamelColor == CamelColor.Black || x.DiceRoll.CamelColor == CamelColor.White) != null)
             {
-                // only one crazy camel can be rolled a round
-                camelColorList.Remove(CamelColor.Black);
-                camelColorList.Remove(CamelColor.White);
+                 camelColorList.Remove(CamelColor.Black);
+                 camelColorList.Remove(CamelColor.White);
             }
+            roles.ForEach(r => camelColorList.Remove(r.DiceRoll.CamelColor));
             return camelColorList;
         }
 

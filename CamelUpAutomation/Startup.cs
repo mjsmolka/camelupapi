@@ -34,6 +34,7 @@ namespace CamelUpAutomation
             builder.Services.AddSingleton<IEmailConfirmationCodeService, EmailConfirmationCodeService>();
             builder.Services.AddSingleton<IGameLogicService, GameLogicService>();
             builder.Services.AddSingleton<IPayoutLogicService, PayoutLogicService>();
+            builder.Services.AddSingleton<ISignalRService, SignalRService>();
 
             //Repos
             builder.Services.AddSingleton<IUserRepo, UserRepo>();
@@ -42,9 +43,9 @@ namespace CamelUpAutomation
             builder.Services.AddSingleton<IEmailConfirmationCodeRepo, EmailConfirmationCodeRepo>();
             builder.Services.AddSingleton<IGameRepo, GameRepo>();
             builder.Services.AddSingleton<IGameUserRepo, GameUserRepo>();
+            builder.Services.AddSingleton<ICamelService, CamelService>();
 
             builder.Services.AddSignalR();
-
         }
     }
 }

@@ -13,9 +13,6 @@ namespace CamelUpAutomation.DTOs.Game
         [Required(ErrorMessage = "GameId is required")]
         public string GameId { get; set; }
 
-        [Required(ErrorMessage = "TicketId is required")]
-        public string TicketId { get; set; }
-
         // required field for Color and must be a enum value of CamelColor
         [Required(ErrorMessage = "Color is required")]
         [EnumDataType(typeof(CamelColor), ErrorMessage = "Color must be a valid CamelColor enum value")]

@@ -13,6 +13,8 @@ using System.Linq;
 using RazorEngineCore;
 using Microsoft.Extensions.Configuration;
 using CamelUpAutomation.Functions.Authentication;
+using Grpc.Core;
+using System.Net;
 
 namespace CamelUpAutomation.Services
 { 
@@ -36,9 +38,9 @@ namespace CamelUpAutomation.Services
                 UserName = config.GetValue<string>("MailUserName"),
                 Password = config.GetValue<string>("MailPassword"),
                 Host = config.GetValue<string>("MailHost"),
-                Port = config.GetValue<int>("MailPort"),
-                UseSSL = config.GetValue<bool>("MailUseSSL"),
-                UseStartTls = config.GetValue<bool>("MailUseStartTls"),
+                Port = 465,
+                UseSSL = true,
+                UseStartTls = false
             };
         }
 
@@ -129,17 +131,28 @@ namespace CamelUpAutomation.Services
 
         public string LoadTemplate(string emailTemplate)
         {
+            /*
             string baseDir = AppDomain.CurrentDomain.FriendlyName + "";
-            string templateDir = Path.Combine(baseDir, "../../../../Files/EmailTemplates/");
-            string templatePath = Path.Combine(templateDir, $"{emailTemplate}.cshtml");
-            
-            using FileStream fileStream = new FileStream(templatePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using StreamReader streamReader = new StreamReader(fileStream, Encoding.Default);
+            string templateDir = Path.Combine("https://beholddevelopment.com/assets/");
+            */
+            string templatePath = "https://beholddevelopment.com/assets/" + $"{emailTemplate}.cshtml";
 
-            string mailTemplate = streamReader.ReadToEnd();
-            streamReader.Close();
+            string mailTemplate = ReadCshtmlFile(templatePath);
 
             return mailTemplate;
+        }
+
+        private string ReadCshtmlFile(string filePath)
+        {
+            return "";
+            /*
+             * 
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead(filePath);
+            StreamReader reader = new StreamReader(stream);
+            String content = reader.ReadToEnd();
+            return content;
+            */
         }
     }
 }

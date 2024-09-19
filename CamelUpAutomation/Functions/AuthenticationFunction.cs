@@ -31,6 +31,15 @@ namespace CamelUpAutomation.Functions
 
 		const string prefix = "auth";
 
+		[FunctionName("Ping")]
+		public async Task<IActionResult> Ping(
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "ping")] HttpRequest req,
+						ILogger log)
+		{ 
+            log.LogInformation("C# HTTP trigger function processed a request: " + "Ping");
+            return new OkObjectResult("Pong");
+        }
+
 		[FunctionName(AzureFunctionNames.AuthLogin)]
 		public async Task<IActionResult> AuthLogin(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = prefix + "/login")] HttpRequest req,
@@ -119,6 +128,30 @@ namespace CamelUpAutomation.Functions
 				ChangePasswordDto dto = validateResult.Result;
 				var verifyEmailResponse = await _authService.UpdateUserPassword(dto.Code, dto.Password);
 				return verifyEmailResponse.ActionResult;
+			} catch (Exception e)
+			{
+                log.LogError(e.Message);
+                return ServiceResult.FailedResult(e.Message, ServiceResponseCode.InternalServerError).ActionResult;
+			}
+		}
+
+		[FunctionName(AzureFunctionNames.AuthRequestChangePassword)]
+		public async Task<IActionResult> AuthRequestChangePassword(
+			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = prefix + "/request-change-password")] HttpRequest req,
+			ILogger log)
+		{
+			try
+			{
+				log.LogInformation("C# HTTP trigger function processed a request: " + AzureFunctionNames.AuthRequestChangePassword);
+				ServiceResult<RequestChangePasswordDto> validateResult = await _validatorService.ValidateDto<RequestChangePasswordDto>(req);
+				if (!validateResult.IsSuccessful)
+				{
+					return validateResult.ActionResult;
+				} 
+
+				RequestChangePasswordDto dto = validateResult.Result;
+				var resetPasswordResponse = await _authService.ResetPassword(dto.Email);
+				return resetPasswordResponse.ActionResult;
 			} catch (Exception e)
 			{
                 log.LogError(e.Message);

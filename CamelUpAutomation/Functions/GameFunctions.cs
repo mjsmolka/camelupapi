@@ -15,10 +15,12 @@ using CamelUpAutomation.Services;
 using CamelUpAutomation.Enums;
 using System.Collections;
 using CamelUpAutomation.Models.Game;
+using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 
 namespace CamelUpAutomation.Functions
 {
-    public class GameFunctions
+    [SignalRConnection("AzureSignalRConnectionString")]
+    public class GameFunctions : ServerlessHub
     {
         private readonly IAuthService _authService;
         private readonly IValidatorService _validatorService;
@@ -145,6 +147,8 @@ namespace CamelUpAutomation.Functions
                         return await AddAutoRollAction(tokenResult.Result, req);
                     case "startGame": 
                         return await StartGame(tokenResult.Result, req);
+                    case "joinGame":
+                        return await JoinGame(tokenResult.Result, req);
 
                     // Place Leg Ticket
                     default:
@@ -171,7 +175,7 @@ namespace CamelUpAutomation.Functions
                 }
                 CreateGameDto dto = validateResult.Result;
 
-                var result = await _gameService.CreateGame(dto.Name, userId, dto.IsPrivate, dto.Code);
+                var result = await _gameService.CreateGame(dto.Name, userId, dto.AutoRoll, dto.IsPrivate, dto.Code);
                 return result.ActionResult;
             }
             catch (Exception e)
@@ -315,7 +319,7 @@ namespace CamelUpAutomation.Functions
                 }
                 var dto = validateResult.Result;
 
-                var result = await _gameService.CreateRollAction(dto.GameId, userId, true);
+                var result = await _gameService.CreateRollAction(dto.GameId, userId);
                 return result.ActionResult;
             }
             catch (Exception e)
@@ -336,6 +340,26 @@ namespace CamelUpAutomation.Functions
                 var dto = validateResult.Result;
 
                 var result = await _gameService.StartGame(dto.GameId, userId);
+                return result.ActionResult;
+            }
+            catch (Exception e)
+            {
+                return ServiceResult.FailedResult(e.Message, ServiceResponseCode.InternalServerError).ActionResult;
+            }
+        }
+
+        private async Task<IActionResult> JoinGame(string userId, HttpRequest req)
+        {
+            try
+            {
+                ServiceResult<JoinGameDto> validateResult = await _validatorService.ValidateDto<JoinGameDto>(req);
+                if (!validateResult.IsSuccessful)
+                {
+                    return validateResult.ActionResult;
+                }
+                var dto = validateResult.Result;
+
+                var result = await _gameService.AddPlayer(dto.GameId, userId, dto.Username, dto.Code);
                 return result.ActionResult;
             }
             catch (Exception e)

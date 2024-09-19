@@ -150,7 +150,8 @@ public class AuthService : IAuthService
 			new Claim(JwtRegisteredClaimNames.Sub, user.Email),
 			new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 			new Claim("emailVerified", user.EmailConfirmed.ToString()),
-			new Claim("userId", user.Id.ToString())
+			new Claim("userId", user.Id.ToString()),
+			new Claim("username", user.UserName.ToString())
 		};
 		var token = new JwtSecurityToken(
 			issuer: _config.GetValue<string>("JWTIssuer"),
@@ -228,7 +229,7 @@ public class AuthService : IAuthService
 		string emailTemplate = _emailService.GetEmailTemplate("VerifyEmail", welcomeEmailData);
 		MailData mailData = new MailData(
 		  new List<string> { user.Email },
-		  "Welcome to the MailKit Demo",
+		  "Confirm Autocamel password",
 		  emailTemplate
 		);
 		await _emailService.SendAsync(mailData, new CancellationToken());
@@ -238,7 +239,7 @@ public class AuthService : IAuthService
 	private async Task<bool> SendPasswordResetEmail(User user)
 	{
 		string token = await GetChangePasswordCode(user);
-		string actionUrl = _config.GetSection("ActionUrls").GetValue("VerifyEmail", "localhost") + $"{token}/{user.Email}";
+		string actionUrl = _config.GetValue<string>("ActionUrl") + $"?code={token}&action=reset";
 		PasswordResetEmailData passwordResetEmailData = new PasswordResetEmailData
 		{
 			Email = user.Email,
@@ -246,8 +247,8 @@ public class AuthService : IAuthService
 		};
 		string emailBody = _emailService.GetEmailTemplate("ResetPassword", passwordResetEmailData);
 		MailData mailData = new MailData(
-		  new List<string> { "martin@skismolka.com" },
-		  "Welcome to the MailKit Demo",
+		  new List<string> { user.Email },
+		  "Reset AutoCamel Password",
 		  emailBody
 		);
 		await _emailService.SendAsync(mailData, new CancellationToken());

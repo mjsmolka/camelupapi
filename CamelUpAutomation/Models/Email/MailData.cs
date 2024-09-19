@@ -12,20 +12,20 @@ namespace CamelUpAutomation.Models.Email
         public List<string> Cc { get; }
 
         // Sender
-        public string? From { get; }
+        public string From { get; }
 
-        public string? DisplayName { get; }
+        public string DisplayName { get; }
 
-        public string? ReplyTo { get; }
+        public string ReplyTo { get; }
 
-        public string? ReplyToName { get; }
+        public string ReplyToName { get; }
 
         // Content
         public string Subject { get; }
 
-        public string? Body { get; }
+        public string Body { get; }
 
-        public MailData(List<string> to, string subject, string? body = null, string? from = null, string? displayName = null, string? replyTo = null, string? replyToName = null, List<string>? bcc = null, List<string>? cc = null)
+        public MailData(List<string> to, string subject, string body = null, string from = null, string displayName = null, string replyTo = null, string replyToName = null, List<string> bcc = null, List<string> cc = null)
         {
             // Receiver
             To = to;

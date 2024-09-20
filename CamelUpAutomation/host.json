@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      },
+      "enableLiveMetricsFilters": true
+    }
+  },
+  "cosmosDB": {
+    "connectionMode": "Gateway",
+    "protocol": "Https",
+    "leaseOptions": {
+      "leasePrefix": "prefix1"
+    },
+    "connectionStringSetting": "CosmosDBConnection",
+    "CosmosDbConnectionSetting": "AccountEndpoint=https://cameldb.documents.azure.com:443/;AccountKey=kyGjooxdNBzAiooq70AUfNEzAuzy0sFeBXf350qWon3jwFbATgD3W6ossssNeV35z2fdpZrHuGIpACDboMxMsw==;"
+  }
+}
